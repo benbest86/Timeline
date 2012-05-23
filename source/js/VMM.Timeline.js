@@ -19,23 +19,27 @@
 /* 	CodeKit Import
 	http://incident57.com/codekit/
 ================================================== */
-
 // @codekit-prepend "VMM.Timeline.License.js";
 
-// @codekit-prepend "VMM.js";
-// @codekit-prepend "VMM.Library.js";
-// @codekit-prepend "VMM.Browser.js";
-// @codekit-prepend "VMM.MediaElement.js";
-// @codekit-prepend "VMM.MediaType.js";
-// @codekit-prepend "VMM.Media.js";
-// @codekit-prepend "VMM.FileExtention.js";
-// @codekit-prepend "VMM.ExternalAPI.js";
-// @codekit-prepend "VMM.TouchSlider.js";
-// @codekit-prepend "VMM.DragSlider.js";
-// @codekit-prepend "VMM.Slider.js";
-// @codekit-prepend "VMM.Slider.Slide.js";
-// @codekit-prepend "VMM.Util.js";
-// @codekit-prepend "VMM.LoadLib.js";
+// @codekit-prepend "Core/VMM.js";
+// @codekit-prepend "Core/VMM.Library.js";
+// @codekit-prepend "Core/VMM.Browser.js";
+// @codekit-prepend "Core/VMM.FileExtention.js";
+// @codekit-prepend "Core/VMM.Date.js";
+// @codekit-prepend "Core/VMM.Util.js";
+// @codekit-prepend "Core/VMM.LoadLib.js";
+
+// @codekit-prepend "Media/VMM.ExternalAPI.js";
+// @codekit-prepend "Media/VMM.MediaElement.js";
+// @codekit-prepend "Media/VMM.MediaType.js";
+// @codekit-prepend "Media/VMM.Media.js";
+// @codekit-prepend "Media/VMM.TextElement.js";
+
+// @codekit-prepend "Slider/VMM.TouchSlider.js";
+// @codekit-prepend "Slider/VMM.DragSlider.js";
+// @codekit-prepend "Slider/VMM.Slider.js";
+// @codekit-prepend "Slider/VMM.Slider.Slide.js";
+
 // @codekit-prepend "VMM.Language.js";
 
 // @codekit-append "VMM.Timeline.TimeNav.js";
@@ -43,6 +47,9 @@
 
 // @codekit-prepend "lib/AES.js";
 // @codekit-prepend "lib/bootstrap-tooltip.js";
+
+
+
 
 /* Timeline
 ================================================== */
@@ -61,13 +68,21 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"1.10";
+		version = 					"1.45mem";
 		
 		trace("TIMELINE VERSION " + version);
 		
 		/* CONFIG
 		================================================== */
 		config = {
+			embed:					false,
+			events: {
+				data_ready:		"DATAREADY",
+				messege:		"MESSEGE",
+				headline:		"TIMELINE_HEADLINE",
+				slide_change:	"SLIDE_CHANGE",
+				resize:			"resize"
+			},
 			id: 					timeline_id,
 			type: 					"timeline",
 			maptype: 				"toner",
@@ -187,6 +202,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			config.feature.height		=	config.height - config.nav.height;
 			VMM.Timeline.Config			=	config;
 			VMM.master_config.Timeline	=	VMM.Timeline.Config;
+			this.events					=	config.events;
 		}
 		
 		/* CREATE TIMELINE STRUCTURE
@@ -219,7 +235,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		================================================== */
 
 		function onDataReady(e, d) {
-			
+			trace("onDataReady");
+			trace(d);
 			data = d.timeline;
 			
 			if (type.of(data.era) == "array") {
@@ -304,23 +321,23 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			createStructure(w,h);
 			
 			trace('TIMELINE INIT');
-			VMM.Util.date.setLanguage(VMM.Timeline.Config.language);
+			VMM.Date.setLanguage(VMM.Timeline.Config.language);
+			VMM.master_config.language = VMM.Timeline.Config.language;
 			
 			$feedback = VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
-			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.Timeline.Config.language.messages.loading_timeline);
+			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.master_config.language.messages.loading_timeline);
 			
-			VMM.bindEvent(global, onDataReady, "DATAREADY");
-			VMM.bindEvent(global, showMessege, "MESSEGE");
+			VMM.bindEvent(global, onDataReady, config.events.data_ready);
+			VMM.bindEvent(global, showMessege, config.events.messege);
 			
 			/* GET DATA
 			================================================== */
 			
 			if (VMM.Browser.browser == "MSIE" && parseInt(VMM.Browser.version, 10) == 7) {
 				ie7 = true;
-				VMM.fireEvent(global, "MESSEGE", "Internet Explorer 7 is not supported by #Timeline.");
+				VMM.fireEvent(global, config.events.messege, "Internet Explorer 7 is not supported by #Timeline.");
 			} else {
 				if (type.of(_data) == "string" || type.of(_data) == "object") {
-					trace("GET DATA 1")
 					VMM.Timeline.DataObj.getData(_data);
 				} else {
 					VMM.Timeline.DataObj.getData(VMM.getElement(timeline_id));
@@ -333,12 +350,19 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			trace("iframeLoaded");
 		};
 		
+		this.reload = function(_d) {
+			trace("loadNewDates" + _d);
+			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.master_config.language.messages.loading_timeline);
+			data = {};
+			VMM.Timeline.DataObj.getData(_d);
+		};
+		
 		/* DATA 
 		================================================== */
 		var getData = function(url) {
 			VMM.getJSON(url, function(d) {
 				data = VMM.Timeline.DataObj.getData(d);
-				VMM.fireEvent(global, "DATAREADY");
+				VMM.fireEvent(global, config.events.data_ready);
 			});
 		};
 		
@@ -363,7 +387,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		var build = function() {
 			
 			// START AT END?
-			if (config.start_at_end) {
+			if (config.start_at_end && config.current_slide == 0) {
 				config.current_slide = _dates.length - 1;
 			}
 			// CREATE DOM STRUCTURE
@@ -381,7 +405,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timenav.init(_dates, data.era);
 			
 			// RESIZE EVENT LISTENERS
-			VMM.bindEvent(global, reSize, "resize");
+			VMM.bindEvent(global, reSize, config.events.resize);
 			//VMM.bindEvent(global, function(e) {e.preventDefault()}, "touchmove");
 			
 		};
@@ -405,9 +429,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		// BUILD DATE OBJECTS
 		var buildDates = function() {
 			
+			_dates = [];
+			VMM.fireEvent(global, config.events.messege, "Building Dates");
 			updateSize();
-			
-			VMM.fireEvent(global, "MESSEGE", "Building Dates");
 			
 			for(var i = 0; i < data.date.length; i++) {
 				
@@ -419,34 +443,37 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					if (data.date[i].type == "tweets") {
 						_date.startdate = VMM.ExternalAPI.twitter.parseTwitterDate(data.date[i].startDate);
 					} else {
-						_date.startdate = VMM.Util.date.parse(data.date[i].startDate);
+						_date.startdate = VMM.Date.parse(data.date[i].startDate);
 					}
 					
-					_date.uniqueid = (data.date[i].startDate).toString() + "-" + i.toString();
+					if (!isNaN(_date.startdate)) {
+						
+						_date.uniqueid = (data.date[i].startDate).toString() + "-" + i.toString();
 					
-					// END DATE
-					if (data.date[i].endDate != null && data.date[i].endDate != "") {
-						if (data.date[i].type == "tweets") {
-							_date.enddate = VMM.ExternalAPI.twitter.parseTwitterDate(data.date[i].endDate);
+						// END DATE
+						if (data.date[i].endDate != null && data.date[i].endDate != "") {
+							if (data.date[i].type == "tweets") {
+								_date.enddate = VMM.ExternalAPI.twitter.parseTwitterDate(data.date[i].endDate);
+							} else {
+								_date.enddate = VMM.Date.parse(data.date[i].endDate);
+							}
 						} else {
-							_date.enddate = VMM.Util.date.parse(data.date[i].endDate);
+							_date.enddate = _date.startdate;
 						}
-					} else {
-						_date.enddate = _date.startdate;
-					}
 					
-					_date.title				=	data.date[i].headline;
-					_date.headline			=	data.date[i].headline;
-					_date.type				=	data.date[i].type;
-					_date.date				=	VMM.Util.date.prettyDate(_date.startdate);
-					_date.startdate_str		=	VMM.Util.date.prettyDate(_date.startdate);
-					_date.enddate_str		=	VMM.Util.date.prettyDate(_date.enddate);
-					_date.asset				=	data.date[i].asset;
-					_date.fulldate			=	_date.startdate.getTime();
-					_date.text				=	data.date[i].text;
-					_date.content			=	"";
-					
-					_dates.push(_date);
+						_date.title				=	data.date[i].headline;
+						_date.headline			=	data.date[i].headline;
+						_date.type				=	data.date[i].type;
+						_date.date				=	VMM.Date.prettyDate(_date.startdate);
+						_date.asset				=	data.date[i].asset;
+						_date.fulldate			=	_date.startdate.getTime();
+						_date.text				=	data.date[i].text;
+						_date.content			=	"";
+						_date.tag				=	data.date[i].tag;
+						_date.slug				=	data.date[i].slug;
+						
+						_dates.push(_date);
+					} 
 					
 				}
 				
@@ -462,12 +489,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			================================================== */
 			if (data.headline != null && data.headline != "" && data.text != null && data.text != "") {
 				trace("HAS STARTPAGE");
-				var _date		=	{};
-				var td_num		=	0;
-				var td			=	_dates[0].startdate;
-				_date.startdate =	_dates[0].startdate;
-				trace(_dates[0].startdate);
-				trace(_date.startdate);
+				var _date = {}, td_num = 0, td;
+				
+				td = _dates[0].startdate;
+				_date.startdate =	new Date(_dates[0].startdate);
 				
 				if (td.getMonth() === 0 && td.getDate() == 1 && td.getHours() === 0 && td.getMinutes() === 0 ) {
 					// trace("YEAR ONLY");
@@ -492,9 +517,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				_date.headline	=	data.headline;
 				_date.text		=	data.text;
 				_date.type		=	"start";
-				_date.date		=	VMM.Util.date.prettyDate(data.startDate);
+				_date.date		=	VMM.Date.prettyDate(data.startDate);
 				_date.asset		=	data.asset;
 				_date.fulldate	=	_date.startdate.getTime();
+				
+				if (config.embed) {
+					VMM.fireEvent(global, config.events.headline, _date.headline);
+				}
 				
 				_dates.push(_date);
 			}

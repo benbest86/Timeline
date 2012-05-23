@@ -1,9 +1,12 @@
-// @codekit-prepend "VMM.Timeline.js";
 /* LANGUAGE 
 ================================================== */
 if(typeof VMM != 'undefined') {
 	VMM.debug = false;
 	VMM.Language = {
+		lang: "fr",
+		api: {
+			wikipedia: "fr"
+		},
 		date: {
 			month: ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"],
 			month_abbr: ["janv.", "févr.", "mars", "avril", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "dec."],
@@ -25,7 +28,10 @@ if(typeof VMM != 'undefined') {
 			loading_timeline: "Chargement de la frise en cours... ",
 		    return_to_title: "Retour à la page d'accueil",
 		    expand_timeline: "Elargir la frise",
-		    contract_timeline: "Réduire la frise"
+		    contract_timeline: "Réduire la frise",
+			wikipedia: "Extrait de Wikipedia, l'encyclopédie libre",
+			loading_content: "Loading Content"
+			
 		}
 	}
 }

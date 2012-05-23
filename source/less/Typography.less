@@ -36,12 +36,21 @@
 		p {
 			color: @color-feature-description;
 		}
+		blockquote, blockquote p {
+			color:@color-feature-title;
+		}
 	}
 	.date, .title {
 		a {
 			color: @color-nav-description;
 		}
-
+	}
+	.hyphenate {
+		-webkit-hyphens:auto;
+		   -moz-hyphens:auto;
+		    -ms-hyphens:auto;
+		        hyphens:auto;
+		word-wrap:break-word;
 	}
 
 	h1, h2, h3, h4, h5, h6 {
@@ -59,8 +68,11 @@
 		font-weight: bold;
 	}
 	h2.start {
-		font-size: 42px;
-		line-height: 44px;
+		//font-size: 42px;
+		//line-height: 44px;
+		font-size: 36px;
+		line-height: 38px;
+		
 		margin-bottom: @base-space;
 	}
 	h1 {
@@ -135,7 +147,7 @@
 	/* BLOCKQUOTES
 	================================================== */
 	
-	blockquote {
+	blockquote, blockquote p {
 		font-size: 28px;
 		text-align:left;
 		line-height: 36px;
@@ -143,6 +155,7 @@
 		padding-top: 10px;
 		background-color:@white;
 		color:@color-feature-title;
+		
 	}
 	
 	/* Caption and Credits

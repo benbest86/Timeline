@@ -1,9 +1,12 @@
-// @codekit-prepend "VMM.Timeline.js";
 /* LANGUAGE 
 ================================================== */
 if(typeof VMM != 'undefined') {
 	VMM.debug = false;
 	VMM.Language = {
+		lang: "is",
+		api: {
+			wikipedia: "is"
+		},
 		date: {
 			month: ["janúar", "febrúar", "mars", "apríl", "maí", "júní", "júlí", "ágúst", "september", "október", "nóvember", "desember"],
 			month_abbr: ["jan.", "feb.", "mars", "apríl", "maí", "júní", "júlí", "ágúst", "sept.", "okt.", "nóv.", "des."],
@@ -25,7 +28,10 @@ if(typeof VMM != 'undefined') {
 			loading_timeline: "Raða upp tímalínu... ",
 			return_to_title: "Til baka á forsíðu",
 			expand_timeline: "Stækka tímalínu",
-			contract_timeline: "Minnka tímalínu"
+			contract_timeline: "Minnka tímalínu",
+			wikipedia: "From Wikipedia, the free encyclopedia",
+			loading_content: "Loading Content"
+			
 		}
 	}
 }

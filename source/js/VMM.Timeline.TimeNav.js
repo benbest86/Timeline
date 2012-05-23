@@ -1062,7 +1062,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				if (data[i].asset != null && data[i].asset != "") {
 					VMM.appendElement(_marker_content, VMM.MediaElement.thumbnail(data[i].asset, 24, 24));
 				} else {
-					//VMM.appendElement(_marker_content, "<div class='thumbnail thumb-plaintext'></div>");
+					//VMM.appendElement(_marker_content, "<div class='vmm-thumbnail thumb-plaintext'></div>");
 					VMM.appendElement(_marker_content, "<div style='margin-right:7px;height:50px;width:2px;float:left;'></div>");
 				}
 				

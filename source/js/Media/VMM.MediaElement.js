@@ -20,61 +20,61 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 				var m				=	VMM.MediaType(data.media); //returns an object with .type and .id
 				// CREATE MEDIA CODE 
 				if (m.type == "image") {
-					//mediaElem		=	"<div class='thumbnail thumb-photo'><img src='" + m.id + "' width='" + _w + "px' height='" + _h + "px'></div>";
-					mediaElem		=	"<div class='thumbnail thumb-photo'></div>";
+					//mediaElem		=	"<div class='vmm-thumbnail thumb-photo'><img src='" + m.id + "' width='" + _w + "px' height='" + _h + "px'></div>";
+					mediaElem		=	"<div class='vmm-thumbnail thumb-photo'></div>";
 					return mediaElem;
 				} else if (m.type	==	"flickr") {
-					mediaElem		=	"<div class='thumbnail thumb-photo' id='flickr_" + m.id + "_thumb'></div>";
+					mediaElem		=	"<div class='vmm-thumbnail thumb-photo' id='flickr_" + m.id + "_thumb'></div>";
 					return mediaElem;
 				} else if (m.type	==	"instagram") {
-					mediaElem		=	"<div class='thumbnail thumb-instagram' id='instagram_" + m.id + "_thumb'><img src='" + VMM.ExternalAPI.instagram.get(m.id, true) + "'></div>";
+					mediaElem		=	"<div class='vmm-thumbnail thumb-instagram' id='instagram_" + m.id + "_thumb'><img src='" + VMM.ExternalAPI.instagram.get(m.id, true) + "'></div>";
 					return mediaElem;
 				} else if (m.type	==	"youtube") {
-					mediaElem		=	"<div class='thumbnail thumb-youtube' id='youtube_" + m.id + "_thumb'></div>";
+					mediaElem		=	"<div class='vmm-thumbnail thumb-youtube' id='youtube_" + m.id + "_thumb'></div>";
 					return mediaElem;
 				} else if (m.type	==	"googledoc") {
-					mediaElem		=	"<div class='thumbnail thumb-document'></div>";
+					mediaElem		=	"<div class='vmm-thumbnail thumb-document'></div>";
 					return mediaElem;
 				} else if (m.type	==	"vimeo") {
-					mediaElem		=	"<div class='thumbnail thumb-vimeo' id='vimeo_" + m.id + "_thumb'></div>";
+					mediaElem		=	"<div class='vmm-thumbnail thumb-vimeo' id='vimeo_" + m.id + "_thumb'></div>";
 					return mediaElem;
 				} else if (m.type  ==  "dailymotion") {
-					mediaElem		=  "<div class='thumbnail thumb-video'></div>";
+					mediaElem		=  "<div class='vmm-thumbnail thumb-video'></div>";
 					return mediaElem;
 				} else if (m.type	==	"twitter"){
-					mediaElem		=	"<div class='thumbnail thumb-twitter'></div>";
+					mediaElem		=	"<div class='vmm-thumbnail thumb-twitter'></div>";
 					return mediaElem;
 				} else if (m.type	==	"twitter-ready") {
-					mediaElem		=	"<div class='thumbnail thumb-twitter'></div>";
+					mediaElem		=	"<div class='vmm-thumbnail thumb-twitter'></div>";
 					return mediaElem;
 				} else if (m.type	==	"soundcloud") {
-					mediaElem		=	"<div class='thumbnail thumb-audio'></div>";
+					mediaElem		=	"<div class='vmm-thumbnail thumb-audio'></div>";
 					return mediaElem;
 				} else if (m.type	==	"google-map") {
-					mediaElem		=	"<div class='thumbnail thumb-map'></div>";
+					mediaElem		=	"<div class='vmm-thumbnail thumb-map'></div>";
 					return mediaElem;
 				} else if (m.type	==	"wikipedia") {
-					mediaElem		=	"<div class='thumbnail thumb-wikipedia'></div>";
+					mediaElem		=	"<div class='vmm-thumbnail thumb-wikipedia'></div>";
 					return mediaElem;
 				} else if (m.type	==	"storify") {
-					mediaElem		=	"<div class='thumbnail thumb-storify'></div>";
+					mediaElem		=	"<div class='vmm-thumbnail thumb-storify'></div>";
 					return mediaElem;
 				} else if (m.type	==	"quote") {
-					mediaElem		=	"<div class='thumbnail thumb-quote'></div>";
+					mediaElem		=	"<div class='vmm-thumbnail thumb-quote'></div>";
 					return mediaElem;
 				} else if (m.type	==	"unknown") {
 					if (m.id.match("blockquote")) {
-						mediaElem		=	"<div class='thumbnail thumb-quote'></div>";
+						mediaElem		=	"<div class='vmm-thumbnail thumb-quote'></div>";
 					} else {
-						mediaElem		=	"<div class='thumbnail thumb-plaintext'></div>";
+						mediaElem		=	"<div class='vmm-thumbnail thumb-plaintext'></div>";
 					}
 					return mediaElem;
 				} else if (m.type	==	"website") {
-					mediaElem		=	"<div class='thumbnail thumb-website'></div>";
-					//mediaElem		=	"<div class='thumbnail'><img src='http://api.snapito.com/free/sc?url=" + m.id + "' width='" + _w + "px' height='" + _h + "px'></div>";
+					mediaElem		=	"<div class='vmm-thumbnail thumb-website'></div>";
+					//mediaElem		=	"<div class='vmm-thumbnail'><img src='http://api.snapito.com/free/sc?url=" + m.id + "' width='" + _w + "px' height='" + _h + "px'></div>";
 					return mediaElem;
 				} else {
-					mediaElem = "<div class='thumbnail thumb-plaintext'></div>";
+					mediaElem = "<div class='vmm-thumbnail thumb-plaintext'></div>";
 					return mediaElem;
 				}
 			} 

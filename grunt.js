@@ -15,48 +15,60 @@ module.exports = function(grunt) {
             timeline: {
                 src: [
                         "source/js/VMM.Timeline.License.js",
-                        "source/js/VMM.js",
-                        "source/js/VMM.Library.js",
-                        "source/js/VMM.Browser.js",
-                        "source/js/VMM.MediaElement.js",
-                        "source/js/VMM.MediaType.js",
-                        "source/js/VMM.Media.js",
-                        "source/js/VMM.FileExtention.js",
-                        "source/js/VMM.ExternalAPI.js",
-                        "source/js/VMM.TouchSlider.js",
-                        "source/js/VMM.DragSlider.js",
-                        "source/js/VMM.Slider.js",
-                        "source/js/VMM.Slider.Slide.js",
-                        "source/js/VMM.Util.js",
-                        "source/js/VMM.LoadLib.js",
+                        "source/js/Core/VMM.js",
+                        "source/js/Core/VMM.Library.js",
+                        "source/js/Core/VMM.Browser.js",
+                        "source/js/Core/VMM.FileExtention.js",
+                        "source/js/Core/VMM.Date.js",
+                        "source/js/Core/VMM.Util.js",
+                        "source/js/Core/VMM.LoadLib.js",
+
+                        "source/js/Media/VMM.ExternalAPI.js",
+                        "source/js/Media/VMM.MediaElement.js",
+                        "source/js/Media/VMM.MediaType.js",
+                        "source/js/Media/VMM.Media.js",
+                        "source/js/Media/VMM.TextElement.js",
+
+                        "source/js/Slider/VMM.TouchSlider.js",
+                        "source/js/Slider/VMM.DragSlider.js",
+                        "source/js/Slider/VMM.Slider.js",
+                        "source/js/Slider/VMM.Slider.Slide.js",
+
                         "source/js/VMM.Language.js",
+
                         "source/js/lib/AES.js",
                         "source/js/lib/bootstrap-tooltip.js",
+
                         "source/js/VMM.Timeline.js",
+
                         "source/js/VMM.Timeline.TimeNav.js",
                         "source/js/VMM.Timeline.DataObj.js"
                     ],
-                dest: "timeline.js"
+                dest: "compiled/js/timeline.js"
             },
             timelineEmbed: {
-                src: ["source/js/lib/Embed.LoadLib.js", "source/js/timeline-embed.js"],
-                dest: "timeline-embed.js"
+                src: ["source/js/lib/Embed.LoadLib.js", "source/js/Embed.js"],
+                dest: "compiled/js/timeline-embed.js"
             }
         },
         min: {
             timeline: {
-                src: ["timeline.js"],
-                dest: "timeline-min.js"
+                src: ["compiled/js/timeline.js"],
+                dest: "compiled/js/timeline-min.js"
             },
             timelineEmbed: {
-                src: ["timeline-embed.js"],
-                dest: "timeline-embed.js"
+                src: ["compiled/js/timeline-embed.js"],
+                dest: "compiled/js/timeline-embed.js"
             }
         },
         less: {
             timeline: {
                 src: ["source/less/VMM.Timeline.less"],
-                dest: "timeline.css"
+                dest: "compiled/css/timeline.css"
+            },
+            dark: {
+                src: ["source/less/Theme/Dark.less"],
+                dest: "compiled/css/themes/dark.css"
             }
         }
     });
